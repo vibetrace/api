@@ -29,22 +29,23 @@ Standard HTTP response codes are used:
 1. `200 Ok` - returned by successful GET/PUT requests.
 2. `201 Created` - returned by succesfull POST requests.
 3. `204 No Content` - returned by successfull DELETE requests to show that the resource is now deleted.
-4. `401 Unauthorized` - returned by all http methods when auth credentials are missing, are wrong or access to the specified resource is forbidden.
-5. `404 Not Found` - returned by all http methods when the resource specified by URI does not exist.
-6. `500 Internal Server Error` - returned by all http methods when an error has occured on Vibetrace servers. Please report these errors back to up at [support@vibetrace.com](mailto:support@vibetrace.com)
+4. `400 Bad Request` - returned when a request is badly formatted or has incorrect parameters.
+5. `401 Unauthorized` - returned by all http methods when auth credentials are missing, are wrong or access to the specified resource is forbidden.
+6. `404 Not Found` - returned by all http methods when the resource specified by URI does not exist.
+7. `500 Internal Server Error` - returned by all http methods when an error has occured on Vibetrace servers. Please report these errors back to up at [support@vibetrace.com](mailto:support@vibetrace.com)
 
 Auth
 ----
 
 All Vibetrace API traffic must be done via [HTTPS](http://en.wikipedia.org/wiki/Https) and using [Basic HTTP authentication](http://en.wikipedia.org/wiki/Basic_access_authentication)
 
-An `APP_ID` and `APP_SECRET` will be generated upon app registration. Keep them safe!
+An `APP_KEY` and `APP_SECRET` will be generated upon app registration. Keep them safe!
 
 Basic HTTP Authorization is required for all API calls. Make sure you add the following http header to **all** your requests:
 ````
 Authorization: Basic aHR0cHdhdGNoOmY=
 ````
-Where `aHR0cHdhdGNoOmY=` is a base64 encoded string `APP_ID:APP_SECRET`
+Where `aHR0cHdhdGNoOmY=` is a base64 encoded string `APP_KEY:APP_SECRET`
 
 `401 Unauthorized` Http Error will be returned if the `Authorization` header is not supplied or if it contains incorrect credentials.
 
@@ -55,36 +56,88 @@ Products
 Allows apps to upload/inspect/modify/remove items of interest.
 
 1. `POST https://vibetrace.com/api/v3/app/:appId/items`
+
  - `Accept: application/json`
  - `Content-Type: application/json`
  - uploads a new item to Vibetrace Data Store.
  - payload should be a simple JSON'd object where the following fields are mandatory:
-    ````
-    @param {Object} item - the body of the http request should be a JSON object.
-    @param {String} [item.id] - REQUIRED app's unique identifier for the particular item. Needed in the `events` endpoint to identify an event's item.
-    @param {String} [item.name] - REQUIRED item's name
-    @param {String} [item.category] - REQUIRED item's category
-    @param {String} [item.description] - OPTIONAL item's description
-    @param {String} [item.price] - OPTIONAL item's standard price in EURO
-    ````
- - if successful, the response will be `201 Created`
+
+````
+@param {Object} item - the body of the http request should be a JSON object.
+@param {String} [item.id] - REQUIRED app's unique identifier for the particular item. Needed in the `events` endpoint to identify an event's item.
+@param {String} [item.name] - REQUIRED item's name
+@param {String} [item.category] - REQUIRED item's category
+@param {String} [item.url] - REQUIRED item's URL, needs to be unique, no two products can have the same url.
+@param {String} [item.image] - REQUIRED item's image URL
+@param {String} [item.description] - REQUIRED item's description
+@param {Number} [item.price] - REQUIRED item's standard price in EURO
+@param {String} [item.location] - OPTIONAL item's standard price in EURO
+````
+
+ - if payload is not correct, a `400 Bad Request` is returned, together with a detailed error payload in json format.
+ - if successful, the response will be `201 Created`, and the payload of the response is a json representation of the resource.
+ - a successful POST response payload returns the same data as the request payload and has the following signature:
+
+````
+@param {Object} item - the body of the response
+@param {String} [item.id]
+@param {String} [item.name]
+@param {String} [item.category]
+@param {String} [item.url]
+@param {String} [item.image]
+@param {String} [item.description]
+@param {Number} [item.price]
+@param {String} [item.location]
+````
 
 2. `GET https://vibetrace.com/api/v3/app/:appId/items/:itemId`
+
  - `Accept: application/json`
  - usefull to inspect a previously uploaded item
- - for `:itemId` use the `id` specified in the POST request
- - if successfull, the response will be `200 Ok` and the payload will be a JSON of the document initially uploaded
+ - for `:itemId` use the `id` specified when the item was created. Note that it's the app's responsability to make sure these id's are unique.
+ - if no resource with the specified `:itemId` and a matching `:appId` is found, the response will be `404 Not Found`.
+ - if successfull, the response will be `200 Ok` and the payload will be a JSON of the document initially uploaded.
+ - the response has the following signature:
+
+````
+@param {Object} item - the body of the response
+@param {String} [item.id]
+@param {String} [item.name]
+@param {String} [item.category]
+@param {String} [item.url]
+@param {String} [item.image]
+@param {String} [item.description]
+@param {Number} [item.price]
+@param {String} [item.location]
+````
 
 3. `PUT https://vibetrace.com/api/v3/app/:appId/items/:itemId`
  - `Accept: application/json`
  - `Content-Type: application/json`
  - usefull to updating the properties of an existing item in the Vibetrace Data Store.
- - accepted payload is similar to the POST request, except that `id` properties will be ignored. _!You cannot change the id of an item._
+ - for `:itemId` use the `id` specified when the item was created. Note that it's the app's responsability to make sure these id's are unique.
+ - _NOTE_ you cannot update the id of an item, the `id` property will be ignored. _!You cannot change the id of an item._
+ - _NOTE_ when updating the url of an item, make sure it's unique within the domain of items synchronized with vibetrace.
  - if successful, the response will be `200 Ok` and the new resource will be returned as json.
+ - accepted payload is similar to the POST request, here's the payload signature:
+
+````
+@param {Object} item - the body of the response
+@param {String} [item.name]
+@param {String} [item.category]
+@param {String} [item.url]
+@param {String} [item.image]
+@param {String} [item.description]
+@param {Number} [item.price]
+@param {String} [item.location]
+````
 
 4. `DELETE https://vibetrace.com/api/v3/app/:appId/items/:itemId`
  - usefull when an item is no longer in the app's collection and should be removed from Vibetrace's recommendation engine.
+ - for `:itemId` use the `id` specified when the item was created. Note that it's the app's responsability to make sure these id's are unique.
  - if sucessful, the response will be `204 No Content` to notify the app that the resource no longer exists
+ - if the item didn't exist in the first place, a `404 Not Found` is returned.
+
 
 Events
 ------
