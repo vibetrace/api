@@ -17,7 +17,7 @@ The latest version of the api is `v3`. Previous versions will soon be deprecated
 
 The API closely follows [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) principles and exposes two types of resources: `items` and `events`.
 
-The API base endpoint is `https://vibetrace.com/api/v3/app/:appId/` where `:appId` is the `APP_ID` string received upon registration.
+The API base endpoint is `https://vibetrace.com/api/v3/apps/:appId/` where `:appId` is the `APP_ID` string received upon registration.
 
 The API data format, both for payloads and responses, is [JSON](http://en.wikipedia.org/wiki/Json)
 
@@ -51,12 +51,11 @@ Where `aHR0cHdhdGNoOmY=` is a base64 encoded string `APP_KEY:APP_SECRET`
 
 Products
 --------
-`https://vibetrace.com/api/v3/app/:appId/items`
+`https://vibetrace.com/api/v3/apps/:appId/items`
 
 Allows apps to upload/inspect/modify/remove items of interest.
 
-1. `POST https://vibetrace.com/api/v3/app/:appId/items`
-
+1. `POST https://vibetrace.com/api/v3/apps/:appId/items`
  - `Accept: application/json`
  - `Content-Type: application/json`
  - uploads a new item to Vibetrace Data Store.
@@ -90,8 +89,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
     @param {String} [item.location]
     ````
 
-2. `GET https://vibetrace.com/api/v3/app/:appId/items/:itemId`
-
+2. `GET https://vibetrace.com/api/v3/apps/:appId/items/:itemId`
  - `Accept: application/json`
  - usefull to inspect a previously uploaded item
  - for `:itemId` use the `id` specified when the item was created. Note that it's the app's responsability to make sure these id's are unique.
@@ -111,7 +109,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
     @param {String} [item.location]
     ````
 
-3. `PUT https://vibetrace.com/api/v3/app/:appId/items/:itemId`
+3. `PUT https://vibetrace.com/api/v3/apps/:appId/items/:itemId`
  - `Accept: application/json`
  - `Content-Type: application/json`
  - usefull to updating the properties of an existing item in the Vibetrace Data Store.
@@ -132,7 +130,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
     @param {String} [item.location]
     ````
 
-4. `DELETE https://vibetrace.com/api/v3/app/:appId/items/:itemId`
+4. `DELETE https://vibetrace.com/api/v3/apps/:appId/items/:itemId`
  - usefull when an item is no longer in the app's collection and should be removed from Vibetrace's recommendation engine.
  - for `:itemId` use the `id` specified when the item was created. Note that it's the app's responsability to make sure these id's are unique.
  - if sucessful, the response will be `204 No Content` to notify the app that the resource no longer exists
@@ -141,13 +139,13 @@ Allows apps to upload/inspect/modify/remove items of interest.
 
 Events
 ------
-`https://vibetrace.com/api/v3/app/:appId/events`
+`https://vibetrace.com/api/v3/apps/:appId/events`
 
 Allows apps to register user's events with Vibetrace and to receive recommendations in real-time based on this and previous events.
 App can only write events on Vibetrace, thus only POST endpoint is exposed
 **NOTE** that it's the app's responsability to make sure the information received is accurate. Sending inconsistent values will result in poor recommendations.
 
-1. `POST https://vibetrace.com/api/v3/app/:appId/events/viewitem`
+1. `POST https://vibetrace.com/api/v3/apps/:appId/events/viewitem`
  - `Accept: application/json`
  - `Content-Type: application/json`
  - registers an `itemView` event on Vibetrace. Events are unique and immutable.
@@ -164,7 +162,7 @@ App can only write events on Vibetrace, thus only POST endpoint is exposed
 
  - if successful, returns `201 Created` status code and a JSON array of recommended item ids, as response body. The app can then render these items as desired.
 
-1. `POST https://vibetrace.com/api/v3/app/:appId/events/search`
+1. `POST https://vibetrace.com/api/v3/apps/:appId/events/search`
  - `Accept: application/json`
  - `Content-Type: application/json`
  - registers a `search` event on Vibetrace. Events are unique and immutable.
