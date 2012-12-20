@@ -62,33 +62,33 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - uploads a new item to Vibetrace Data Store.
  - payload should be a simple JSON'd object where the following fields are mandatory:
 
-````
-@param {Object} item - the body of the http request should be a JSON object.
-@param {String} [item.id] - REQUIRED app's unique identifier for the particular item. Needed in the `events` endpoint to identify an event's item.
-@param {String} [item.name] - REQUIRED item's name
-@param {String} [item.category] - REQUIRED item's category
-@param {String} [item.url] - REQUIRED item's URL, needs to be unique, no two products can have the same url.
-@param {String} [item.image] - REQUIRED item's image URL
-@param {String} [item.description] - REQUIRED item's description
-@param {Number} [item.price] - REQUIRED item's standard price in EURO
-@param {String} [item.location] - OPTIONAL item's standard price in EURO
-````
+    ````
+    @param {Object} item - the body of the http request should be a JSON object.
+    @param {String} [item.id] - REQUIRED app's unique identifier for the particular item. Needed in the `events` endpoint to identify an event's item.
+    @param {String} [item.name] - REQUIRED item's name
+    @param {String} [item.category] - REQUIRED item's category
+    @param {String} [item.url] - REQUIRED item's URL, needs to be unique, no two products can have the same url.
+    @param {String} [item.image] - REQUIRED item's image URL
+    @param {String} [item.description] - REQUIRED item's description
+    @param {Number} [item.price] - REQUIRED item's standard price in EURO
+    @param {String} [item.location] - OPTIONAL item's standard price in EURO
+    ````
 
  - if payload is not correct, a `400 Bad Request` is returned, together with a detailed error payload in json format.
  - if successful, the response will be `201 Created`, and the payload of the response is a json representation of the resource.
  - a successful POST response payload returns the same data as the request payload and has the following signature:
 
-````
-@param {Object} item - the body of the response
-@param {String} [item.id]
-@param {String} [item.name]
-@param {String} [item.category]
-@param {String} [item.url]
-@param {String} [item.image]
-@param {String} [item.description]
-@param {Number} [item.price]
-@param {String} [item.location]
-````
+    ````
+    @param {Object} item - the body of the response
+    @param {String} [item.id]
+    @param {String} [item.name]
+    @param {String} [item.category]
+    @param {String} [item.url]
+    @param {String} [item.image]
+    @param {String} [item.description]
+    @param {Number} [item.price]
+    @param {String} [item.location]
+    ````
 
 2. `GET https://vibetrace.com/api/v3/app/:appId/items/:itemId`
 
@@ -99,17 +99,17 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - if successfull, the response will be `200 Ok` and the payload will be a JSON of the document initially uploaded.
  - the response has the following signature:
 
-````
-@param {Object} item - the body of the response
-@param {String} [item.id]
-@param {String} [item.name]
-@param {String} [item.category]
-@param {String} [item.url]
-@param {String} [item.image]
-@param {String} [item.description]
-@param {Number} [item.price]
-@param {String} [item.location]
-````
+    ````
+    @param {Object} item - the body of the response
+    @param {String} [item.id]
+    @param {String} [item.name]
+    @param {String} [item.category]
+    @param {String} [item.url]
+    @param {String} [item.image]
+    @param {String} [item.description]
+    @param {Number} [item.price]
+    @param {String} [item.location]
+    ````
 
 3. `PUT https://vibetrace.com/api/v3/app/:appId/items/:itemId`
  - `Accept: application/json`
@@ -121,16 +121,16 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - if successful, the response will be `200 Ok` and the new resource will be returned as json.
  - accepted payload is similar to the POST request, here's the payload signature:
 
-````
-@param {Object} item - the body of the response
-@param {String} [item.name]
-@param {String} [item.category]
-@param {String} [item.url]
-@param {String} [item.image]
-@param {String} [item.description]
-@param {Number} [item.price]
-@param {String} [item.location]
-````
+    ````
+    @param {Object} item - the body of the response
+    @param {String} [item.name]
+    @param {String} [item.category]
+    @param {String} [item.url]
+    @param {String} [item.image]
+    @param {String} [item.description]
+    @param {Number} [item.price]
+    @param {String} [item.location]
+    ````
 
 4. `DELETE https://vibetrace.com/api/v3/app/:appId/items/:itemId`
  - usefull when an item is no longer in the app's collection and should be removed from Vibetrace's recommendation engine.
@@ -153,13 +153,15 @@ App can only write events on Vibetrace, thus only POST endpoint is exposed
  - registers an `itemView` event on Vibetrace. Events are unique and immutable.
  - this endpoint requires ID's for current user, session and item. This way Vibetrace keeps track of user sessions and viewed items.
  - the payload is a JSON object with the following signature:
-    ````
-    @param {Object} payload - the body of the http request should be a JSON object.
-    @param {String} [payload.userId] - REQUIRED, unique identifier for the app's user.
-    @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
-    @param {String} [payload.itemId] - REQUIRED, unique identifier of the viewed item
-    @param {String} [payload.refferer] - OPTIONAL, url of the referer site, only relevant when the url is external.
-    ````
+
+        ````
+        @param {Object} payload - the body of the http request should be a JSON object.
+        @param {String} [payload.userId] - REQUIRED, unique identifier for the app's user.
+        @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
+        @param {String} [payload.itemId] - REQUIRED, unique identifier of the viewed item
+        @param {String} [payload.refferer] - OPTIONAL, url of the referer site, only relevant when the url is external.
+        ````
+
  - if successful, returns `201 Created` status code and a JSON array of recommended item ids, as response body. The app can then render these items as desired.
 
 1. `POST https://vibetrace.com/api/v3/app/:appId/events/search`
@@ -169,14 +171,16 @@ App can only write events on Vibetrace, thus only POST endpoint is exposed
  - use this endpoint to let Vibetrace know what the user is searching for on your site.
  - this endpoint requires ID's for current user, session. This way Vibetrace keeps track of user sessions.
  - the payload is a JSON object with the following signature:
-    ````
-    @param {Object} payload - the body of the http request should be a JSON object.
-    @param {String} [payload.userId] - REQUIRED, unique identifier for the app's user.
-    @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
-    @param {String} [payload.searchQuery] - REQUIRED, the string introduced in the query input.
-    @param {String} [payload.itemId] - REQUIRED, unique identifier of the viewed item
-    @param {String} [payload.refferer] - OPTIONAL, url of the referer site, only relevant when the url is external.
-    ````
+
+        ````
+        @param {Object} payload - the body of the http request should be a JSON object.
+        @param {String} [payload.userId] - REQUIRED, unique identifier for the app's user.
+        @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
+        @param {String} [payload.searchQuery] - REQUIRED, the string introduced in the query input.
+        @param {String} [payload.itemId] - REQUIRED, unique identifier of the viewed item
+        @param {String} [payload.refferer] - OPTIONAL, url of the referer site, only relevant when the url is external.
+        ````
+
  - if successful, it returns `201 Created` status code with an empty http body.
 
 
