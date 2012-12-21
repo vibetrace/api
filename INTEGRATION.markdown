@@ -14,7 +14,7 @@ Please let us know how the integration is progressing, what problems have you en
 
 For that and any other equiry or suggestion please email use at [admin@vibetrace.com](mailto:admin@vibetrace.com)
 
-There are three steps to integrate vibetrace api. Please refere to the [Vibetrace API document](github.com/vibetrace/api/README.markdown) for a detailed description of how to use the API.
+There are three steps to integrate vibetrace api. Please refere to the [Vibetrace API document](https://github.com/vibetrace/api/blob/master/README.markdown) for a detailed description of how to use the API.
 
 
 
@@ -26,7 +26,7 @@ This process must be continuous and should be performed every time a new item is
 We advice you to integrate these tasks into the business logic of your application for a seamless synchronization.
 
 Use the vibetrace API's `/items` endpoint to upload, modify, inspect or delete items.
-Checkout the [API description](github.com/vibetrace/api/README.markdown) to find out how to do that.
+Checkout the [API description](https://github.com/vibetrace/api/blob/master/README.markdown) to find out how to do that.
 
 _NOTE_ It is important to keep your item catalog synchronized with vibetrace, recommendation quality might suffer if for instance the engine recommends an item that is no longer in your catalog.
 
