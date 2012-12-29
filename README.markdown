@@ -33,7 +33,7 @@ Standard HTTP response codes are used:
 5. `401 Unauthorized` - returned by all http methods when auth credentials are missing or are wrong.
 6. `403 Forbidden` - returned by all http methods when the client is authenticated but he does not have access to the requested resource.
 6. `404 Not Found` - returned by all http methods when the resource specified in the URI does not exist.
-7. `500 Internal Server Error` - returned by all http methods when an error has occured on Vibetrace servers. Please report these errors back to up at [support@vibetrace.com](mailto:support@vibetrace.com)
+7. `500 Internal Server Error` - returned by all http methods when an error has occured on Vibetrace servers. Please report these errors at [alext@vibetrace.com](mailto:alext@vibetrace.com)
 
 Auth
 ----
@@ -46,7 +46,7 @@ Basic HTTP Authorization is required for all API calls. Make sure you add the fo
 ````
 Authorization: Basic aHR0cHdhdGNoOmY=
 ````
-Where `aHR0cHdhdGNoOmY=` is a base64 encoded string formed like so: `API_KEY:API_SECRET`
+Where `aHR0cHdhdGNoOmY=` is an _example_ of a base64 encoded string formed like so: `API_KEY:API_SECRET`
 
 `401 Unauthorized` Http Error will be returned if the `Authorization` header is not supplied or if it contains incorrect credentials.
 
@@ -57,7 +57,9 @@ Products
 
 Allows apps to upload/inspect/modify/remove items of interest.
 
+
 1. `POST https://app.vibetrace.com/api/v3/apps/:appId/items`
+
  - `Accept: application/json`
  - `Content-Type: application/json`
  - uploads a new item to Vibetrace Data Store.
@@ -100,6 +102,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
 
 
 2. `GET https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
+
  - `Accept: application/json`
  - usefull to inspect a previously uploaded item
  - for `:itemId` use the `id` specified when the item was created. Note that it's the app's responsability to make sure these id's are accurate. This API will only check for it's uniqueness.
@@ -120,10 +123,13 @@ Allows apps to upload/inspect/modify/remove items of interest.
     ````
 
  - below is an example of using `curl` to inspect an existing item by it's id:
+
     ````bash
     curl --request GET --header "Accept: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items/1
     ````
+
  - the response will be:
+
     ````json
     {
       "id": "1",
@@ -137,7 +143,9 @@ Allows apps to upload/inspect/modify/remove items of interest.
     }
     ````
 
+
 3. `PUT https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
+
  - `Accept: application/json`
  - `Content-Type: application/json`
  - usefull to updating the properties of an existing item in the Vibetrace Data Store.
@@ -160,10 +168,13 @@ Allows apps to upload/inspect/modify/remove items of interest.
 
  - _NOTE_ all properties that are not specified in the signature above will be ignored.
  - below is an example of using `curl` for updating an existing item:
+
     ````bash
     curl --request PUT --header "Content-Type: application/json" --header "Accept: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"category": "category2"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items/1
     ````
+
  - the response will be
+
     ````json
     {
       "id": "1",
@@ -177,26 +188,35 @@ Allows apps to upload/inspect/modify/remove items of interest.
     }
     ````
 
+
 4. `DELETE https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
+
  - usefull when an item is no longer in the app's collection and should be removed from Vibetrace's recommendation engine.
  - for `:itemId` use the `id` specified when the item was created. Note that it's the app's responsability to make sure these id's are accurate. This API will only check for it's uniqueness.
  - if sucessful, the response will be `204 No Content` to notify the app that the resource no longer exists
  - _NOTE_ For reasons of efficiency, this method does not check if the item exists. If it doesn't it will still return `204 No Content`.
  - below is an example of using `curl` to delete an existing item:
+
     ````bash
     curl --request DELETE --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items/1
     ````
- - the response will be empty
+
+ - the response payload will be empty
+
 
 Events
 ------
 `https://app.vibetrace.com/api/v3/apps/:appId/events`
 
 Allows apps to register user's events with Vibetrace and to receive recommendations in real-time based on this and previous events.
-App can only write events on Vibetrace, thus only POST endpoint is exposed
-**NOTE** that it's the app's responsability to make sure the information received is accurate. Sending inconsistent values will result in poor recommendations.
+
+App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
+
+**NOTE** The app is responsable to make sure the information sent to Vibetrace is accurate. Sending inconsistent values will result in poor recommendations. If you encounter dificulties, please contact us at [alext@vibetrace.com](mailto:alext@vibetrace.com)
+
 
 1. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/viewitem`
+
  - `Accept: application/json`
  - `Content-Type: application/json`
  - registers an `itemView` event on Vibetrace. Events are unique and immutable.
@@ -205,34 +225,72 @@ App can only write events on Vibetrace, thus only POST endpoint is exposed
 
     ````
     @param {Object} payload - the body of the http request should be a JSON object.
-    @param {String} [payload.userId] - REQUIRED, unique identifier for the app's user.
+    @param {String} [payload.userId] - OPTIONAL, unique identifier for the app's user. Only for registered users. This allows vibetrace to track users' preferences across multiple sessions.
     @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
-    @param {String} [payload.itemId] - REQUIRED, unique identifier of the viewed item
-    @param {String} [payload.refferer] - OPTIONAL, url of the referer site, only relevant when the url is external.
+    @param {String} [payload.itemId] - REQUIRED, unique identifier of the added item. This id **must** be already declared and syncd with Vibetrace using the `/items` API. This endpoint will return 400 otherwise.
+    @param {String} [payload.referer] - OPTIONAL, url of the referer site, only relevant when the url is external. Vibetrace parses the referral page to extract further information about the user's interests.
     ````
 
- - if successful, returns `201 Created` status code and a JSON array of recommended item ids, as response body. The app can then render these items as desired.
+ - if successful, it returns `201 Created` status code with an empty http body.
+ - below is an example of using `curl` for creating a new viewitem event:
 
-1. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/search`
+    ````
+    curl --request POST --header "Content-Type: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "itemId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/events/viewitem
+    ````
+
+
+2. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/search`
+
  - `Accept: application/json`
  - `Content-Type: application/json`
  - registers a `search` event on Vibetrace. Events are unique and immutable.
- - use this endpoint to let Vibetrace know what the user is searching for on your site.
+ - use this endpoint to let Vibetrace know what the user is searching for on your site and allows the app to make personalized recommendations to the user.
  - this endpoint requires ID's for current user, session. This way Vibetrace keeps track of user sessions.
  - the payload is a JSON object with the following signature:
 
     ````
     @param {Object} payload - the body of the http request should be a JSON object.
-    @param {String} [payload.userId] - REQUIRED, unique identifier for the app's user.
+    @param {String} [payload.userId] - OPTIONAL, unique identifier for the app's user. Only for registered users. This allows vibetrace to track users' preferences across multiple sessions.
     @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
-    @param {String} [payload.searchQuery] - REQUIRED, the string introduced in the query input.
-    @param {String} [payload.itemId] - REQUIRED, unique identifier of the viewed item
-    @param {String} [payload.refferer] - OPTIONAL, url of the referer site, only relevant when the url is external.
+    @param {String} [payload.query] - REQUIRED, the string introduced in the query input.
+    @param {String} [payload.itemId] - REQUIRED, unique identifier of the added item. This id **must** be already declared and syncd with Vibetrace using the `/items` API. This endpoint will return 400 otherwise.
+    @param {String} [payload.referer] - OPTIONAL, url of the referer site, only relevant when the url is external. Vibetrace parses the referral page to extract further information about the user's interests.
     ````
 
  - if successful, it returns `201 Created` status code with an empty http body.
+ - below is an example of using `curl` for creating a new `search` event:
+
+    ````
+    curl --request POST --header "Content-Type: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"query": "awesome product", "referer": "http://google.com/q=some+query", "sessionId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/events/search
+    ````
+
+
+3. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/addtocart`
+
+ - `Accept: application/json`
+ - `Content-Type: application/json`
+ - registers a `search` event on Vibetrace. Events are unique and immutable.
+ - this event should be sent when the user adds an item into the app's cart. Currently the api does not support adding multiple items to cart at once so for quantity larger than 1, use this endpoint multiple times.
+ - to identify the cart the app must supply an unique cart id. This way Vibetrace can keep track of user shopping sessions.
+ - the payload is a JSON object with the following signature:
+
+    ````
+    @param {Object} payload - the body of the http request should be a JSON object.
+    @param {String} [payload.userId] - OPTIONAL, unique identifier for the app's user. Only for registered users. This allows vibetrace to track users' preferences across multiple sessions.
+    @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
+    @param {String} [payload.cartId] - REQUIRED, unique identified of a shopping cart session.
+    @param {String} [payload.itemId] - REQUIRED, unique identifier of the added item. This id **must** be already declared and syncd with Vibetrace using the `/items` API. This endpoint will return 400 otherwise.
+    @param {String} [payload.referer] - OPTIONAL, url of the referer site, only relevant when the url is external. Vibetrace parses the referral page to extract further information about the user's interests.
+    ````
+
+ - if successful, it returns `201 Created` status code with an empty http body.
+ - below is an example of using `curl` for creating a new `add to cart` event:
+
+    ````
+    curl --request POST --header "Content-Type: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"sessionId": "1", "itemId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/events/addtocart
+    ````
 
 
 Support
 -------
-For any questions, feedback, issues or feature requests please use the issue tracker on this repo or email us at [admin@vibetrace.com](mailto:support@vibetrace.com).
+For any questions, feedback, issues or feature requests please use the issue tracker on this repo or email us at [alext@vibetrace.com](mailto:alext@vibetrace.com).
