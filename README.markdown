@@ -97,7 +97,22 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` for creating a new item:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"id":"1","name":"product1", "category": "category1", "url": "http://yourshop.com/products/1", "image": "http://yourshop.com/products/1.png", "description": "product1 in category1", "price": 100, "location": "Bucuresti"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"id":"1","name":"product1", "category": "category1", "url": "http://domain.com/products/1", "image": "http://domain.com/products/1.png", "description": "product1 in category1", "price": 100, "location": "Romania"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items
+    ````
+
+ - the response for the above request is:
+
+    ````json
+    {
+       "id":"1",
+       "name":"product1",
+       "category":"category1",
+       "url":"http://domain.com/products/1",
+       "image":"http://domain.com/products/1.png",
+       "description":"product1 in category1",
+       "price":100,
+       "location":"Romania"
+    }
     ````
 
 
@@ -125,10 +140,10 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` to inspect an existing item by it's id:
 
     ````bash
-    curl --request GET --header "Accept: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items/1
+    curl --request GET --header "Accept: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
- - the response will be:
+ - the response for the above request is:
 
     ````json
     {
@@ -152,7 +167,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` to issue a HEAD request.
 
     ````bash
-    curl --request HEAD --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items/1
+    curl --request HEAD --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
 
@@ -182,21 +197,21 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` for updating an existing item:
 
     ````bash
-    curl --request PUT --header "Content-Type: application/json" --header "Accept: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"category": "category2"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items/1
+    curl --request PUT --header "Content-Type: application/json" --header "Accept: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"category": "category2"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
  - the response will be
 
     ````json
     {
-      "id": "1",
-      "name": "product1",
-      "category": "category2",
-      "url": "http://yourshop.com/products/1",
-      "image": "http://yourshop.com/products/1.png",
-      "description": "product1 in category1",
-      "price": 100,
-      "location": "Bucuresti"
+       "id":"1",
+       "name":"product1",
+       "category":"category2",
+       "url":"http://domain.com/products/1",
+       "image":"http://domain.com/products/1.png",
+       "description":"product1 in category1",
+       "price":100,
+       "location":"Romania"
     }
     ````
 
@@ -210,7 +225,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` to delete an existing item:
 
     ````bash
-    curl --request DELETE --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items/1
+    curl --request DELETE  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
  - the response payload will be empty
@@ -247,7 +262,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for creating a new viewitem event:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "itemId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/events/viewitem
+    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "itemId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewitem
     ````
 
 
@@ -273,7 +288,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for creating a new `search` event:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"query": "awesome product", "referer": "http://google.com/q=some+query", "sessionId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/events/search
+    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"query": "awesome product", "referer": "http://google.com/q=some+query", "sessionId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/search
     ````
 
 
@@ -299,7 +314,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for creating a new `add to cart` event:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"sessionId": "1", "itemId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/events/addtocart
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "itemId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/addtocart
     ````
 
 
@@ -310,7 +325,7 @@ Apps
 
 Vibetrace allows apps to register in a programatic way using the endpoint described in this section.
 
-**NOTE** Registration process is a multi-step process starting with a successfull `POST` api call. Vibetrace will then contact you, enable the app and start the integration process.
+**NOTE** The registration process has multiple steps. After a successfull `POST` api call. Vibetrace will then contact you, enable the app and start the integration process.
 
 
 1. `POST https://app.vibetrace.com/api/v3/apps`
@@ -345,7 +360,21 @@ Vibetrace allows apps to register in a programatic way using the endpoint descri
  - exemple of using curl to register a new application:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --data-binary '{"email": "me@domain.com", "url": "http://domain.com", "feed": "http://domain.com/feed.json"}' --insecure https://app.vibetrace.com/api/v3/apps
+    curl --request POST --header "Content-Type: application/json" --data-binary '{"email": "me@domain.com", "url": "http://domain.com", "feed": "http://domain.com/feed.json", "version": "v3"}' --insecure https://app.vibetrace.com/api/v3/apps
+    ````
+
+ - the response to the above request is:
+
+    ````json
+    {
+        "id": "50fc3bb47cfd33723b00000c",
+        "apiKey": "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=",
+        "apiSecret": "U1tfKBtyJstc+LqOUem99YkI1hM=",
+        "url": "http://domain.com",
+        "email": "me@domain.com",
+        "feed": "http://domain.com/feed.json",
+        "isActive": false
+    }
     ````
 
 
@@ -373,7 +402,21 @@ Vibetrace allows apps to register in a programatic way using the endpoint descri
  - exemple of using curl to fetch information about a registered application:
 
     ````
-    curl --request GET --header "Content-Type: application/json" --insecure https://app.vibetrace.com/api/v3/apps/1921309123ab1235de131f106
+    curl --request GET --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c
+    ````
+
+ - the response for the above request is:
+
+    ````json
+    {
+        "id": "50fc3bb47cfd33723b00000c",
+        "apiKey": "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=",
+        "apiSecret": "U1tfKBtyJstc+LqOUem99YkI1hM=",
+        "url": "http://domain.com",
+        "email": "me@domain.com",
+        "feed": "http://domain.com/feed.json",
+        "isActive":false
+    }
     ````
 
 
