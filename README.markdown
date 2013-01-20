@@ -42,7 +42,7 @@ All Vibetrace API traffic must be done via [HTTPS](http://en.wikipedia.org/wiki/
 
 An `APP_ID`, `API_KEY` and `API_SECRET` will be generated upon app registration. Keep them safe!
 
-Basic HTTP Authorization is required for all API calls. Make sure you add the following http header to **all** your requests:
+Basic HTTP Authorization is required for most API calls. Make sure you add the following http header to the endpoints that require it:
 ````
 Authorization: Basic aHR0cHdhdGNoOmY=
 ````
@@ -144,7 +144,19 @@ Allows apps to upload/inspect/modify/remove items of interest.
     ````
 
 
-3. `PUT https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
+3. `HEAD https://app.vibetrace.com/api/v2/apps/:appId/items/:itemId`
+
+ - usefull for checking if a item identified by `:itemId` exists and belongs to an app identified by `:appId`.
+ - this endpoint returns 200 if such an item exists or 404 if it doesn't.
+ - _NOTE_ This endpoint does not require HTTP Basic Auth, meaning you can request this resource without authentication.
+ - below is an example of using `curl` to issue a HEAD request.
+
+    ````bash
+    curl --request HEAD --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/items/1
+    ````
+
+
+4. `PUT https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
 
  - `Accept: application/json`
  - `Content-Type: application/json`
@@ -189,7 +201,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
     ````
 
 
-4. `DELETE https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
+5. `DELETE https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
 
  - usefull when an item is no longer in the app's collection and should be removed from Vibetrace's recommendation engine.
  - for `:itemId` use the `id` specified when the item was created. Note that it's the app's responsability to make sure these id's are accurate. This API will only check for it's uniqueness.
@@ -288,6 +300,80 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````
     curl --request POST --header "Content-Type: application/json" --user "qzWbFPd967X/Zuy8HkcZqY1Dwms=:aSZLslkKS09dMkYzDWlj43L93Os=" --data-binary '{"sessionId": "1", "itemId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50d9b2f2cc38a48b1e000007/events/addtocart
+    ````
+
+
+Apps
+----
+
+`https://app.vibetrace.com/api/v3/apps/`
+
+Vibetrace allows apps to register in a programatic way using the endpoint described in this section.
+
+**NOTE** Registration process is a multi-step process starting with a successfull `POST` api call. Vibetrace will then contact you, enable the app and start the integration process.
+
+
+1. `POST https://app.vibetrace.com/api/v3/apps`
+
+ - `Accept: application/json`
+ - `Content-Type: application/json`
+ - registers a new app in the Vibetrace engine.
+ - _NOTE_ this endpoint requires an HTTPS request but does enforce authentication.
+ - the payload is a JSON object with the following signature:
+`
+    ````
+    @param {Object} payload - the body of the http request should be a JSON object.
+    @param {String} [payload.email] - REQUIRED, an email address which we will use to contact you.
+    @param {String} [payload.url] - REQUIRED, the url of your public-facing website where you want to integrate Vibetrace services
+    @param {String} [payload.feed] - REQUIRED, the item feed of you web-site. This is required for the recommender service that Vibetrace provides.
+    ````
+
+ - the response of a successful requst will contain the now registered app's credentials. The payload signature is the following:
+
+    ````
+    @param {Object} payload - the body of the response is a JSON object.
+    @param {String} [payload.id] - the `APP_ID` of the newly registered application.
+    @param {String} [payload.apiKey] - the `API_KEY` used to authenticate requests made by the app to Vibetrace.
+    @param {String} [payload.apiSecret] - the `API_SECRET` used to authenticate requests made by the app to Vibetrace.
+    @param {String} [payload.url] - the app url sent in the request.
+    @param {String} [payload.email] - the email sent in the request.
+    @param {String} [payload.feed] - the feed url sent in the request.
+    @param {Boolean} [payload.isActive] - a flag indicating whether the app is ready to send requests to Vibetrace or not.
+    ````
+
+ - an email notification will also be sent to the supplied `email` parameter to kickstart the collaboration.
+ - exemple of using curl to register a new application:
+
+    ````
+    curl --request POST --header "Content-Type: application/json" --data-binary '{"email": "me@domain.com", "url": "http://domain.com", "feed": "http://domain.com/feed.json"}' --insecure https://app.vibetrace.com/api/v3/apps
+    ````
+
+
+
+2. `GET https://app.vibetrace.com/api/v3/apps/:appId`
+
+ - `Content-Type: application/json`
+ - use this endpoint to fetch information about your app, including api tokens and app status withing Vibetrace.
+ - _NOTE_ this endpoint requires HTTPS and authentication. Please refer to the [Auth](https://github.com/vibetrace/api#auth) section to find out how to authenticate your requests.
+ - for `:appId` use the APP_ID received upon registration.
+ - a correct request returns `200 Ok` with a payload that has the following signature:
+
+    ````
+    @param {Object} payload - the body of the response is a JSON object.
+    @param {String} [payload.id] - the `APP_ID` of the newly registered application.
+    @param {String} [payload.apiKey] - the `API_KEY` used to authenticate requests made by the app to Vibetrace.
+    @param {String} [payload.apiSecret] - the `API_SECRET` used to authenticate requests made by the app to Vibetrace.
+    @param {String} [payload.url] - the app url sent in the request.
+    @param {String} [payload.email] - the email sent in the request.
+    @param {String} [payload.feed] - the feed url sent in the request.
+    @param {Boolean} [payload.isActive] - a flag indicating whether the app is ready to send requests to Vibetrace or not.
+    ````
+
+ - in case the `:appId` is wrongly set or doesn't match the auth tokens a `403 Unauthorized` will be returned.
+ - exemple of using curl to fetch information about a registered application:
+
+    ````
+    curl --request GET --header "Content-Type: application/json" --insecure https://app.vibetrace.com/api/v3/apps/1921309123ab1235de131f106
     ````
 
 
