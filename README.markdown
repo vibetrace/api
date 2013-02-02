@@ -51,8 +51,9 @@ Where `aHR0cHdhdGNoOmY=` is an _example_ of a base64 encoded string formed like 
 `401 Unauthorized` Http Error will be returned if the `Authorization` header is not supplied or if it contains incorrect credentials.
 
 
-Products
---------
+Items
+-----
+
 `https://app.vibetrace.com/api/v3/apps/:appId/items`
 
 Allows apps to upload/inspect/modify/remove items of interest.
@@ -233,6 +234,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
 
 Events
 ------
+
 `https://app.vibetrace.com/api/v3/apps/:appId/events`
 
 Allows apps to register user's events with Vibetrace and to receive recommendations in real-time based on this and previous events.
@@ -246,7 +248,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
  - `Accept: application/json`
  - `Content-Type: application/json`
- - registers an `itemView` event on Vibetrace. Events are unique and immutable.
+ - registers an `viewItem` event on Vibetrace. Events are unique and immutable.
  - this endpoint requires ID's for current user, session and item. This way Vibetrace keeps track of user sessions and viewed items.
  - the payload is a JSON object with the following signature:
 
@@ -266,7 +268,31 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
 
 
-2. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/search`
+2. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/viewcategory`
+
+ - `Accept: application/json`
+ - `Content-Type: application/json`
+ - registers an `viewCategory` event on Vibetrace which means the user is on a category page.
+ - this endpoint requires ID's for current user, session and category. This way Vibetrace keeps track of user sessions and viewed categories.
+ - the payload is a JSON object with the following signature:
+
+    ````
+    @param {Object} payload - the body of the http request should be a JSON object.
+    @param {String} [payload.userId] - OPTIONAL, unique identifier for the app's user. Only for registered users. This allows vibetrace to track users' preferences across multiple sessions.
+    @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
+    @param {String} [payload.category] - REQUIRED, unique identifier of the category being viewed. This should be the same string as the one supplied when adding items to vibetrace in the `category` field of the POST `/items` endpoint.
+    @param {String} [payload.referer] - OPTIONAL, url of the referer site, only relevant when the url is external. Vibetrace parses the referral page to extract further information about the user's interests.
+    ````
+
+ - if successful, it returns `201 Created` status code with an empty http body.
+ - below is an example of using `curl` for creating a new viewitem event:
+
+    ````
+    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "categoryId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewcategory
+    ````
+
+
+3. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/search`
 
  - `Accept: application/json`
  - `Content-Type: application/json`
@@ -292,7 +318,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
 
 
-3. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/addtocart`
+4. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/addtocart`
 
  - `Accept: application/json`
  - `Content-Type: application/json`
@@ -318,7 +344,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
 
 
-4. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/checkout`
+5. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/checkout`
 
  - `Accept: application/json`
  - `Content-Type: application/json`
