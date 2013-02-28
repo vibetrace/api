@@ -69,9 +69,8 @@ This process involves the Vibetrace Javascript SDK.
             var l=document.createElement('script');
             l.type='text/javascript';
             l.async=true;
-            l.id='vt-script-integration';
-            l.src='https://app.vibetrace.com/javascripts/loader/APP_ID.js';
-            var s=document.getElementById('vt-script-loader');
+            l.src='https://app.vibetrace.com/loaders/APP_ID.js';
+            var s=document.getElementsById('vt-script-loader');
             s.parentNode.insertBefore(l, s);
         })();
     </script>
