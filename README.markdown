@@ -306,7 +306,6 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     @param {String} [payload.userId] - OPTIONAL, unique identifier for the app's user. Only for registered users. This allows vibetrace to track users' preferences across multiple sessions.
     @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
     @param {String} [payload.query] - REQUIRED, the string introduced in the query input.
-    @param {String} [payload.itemId] - REQUIRED, unique identifier of the added item. This id **must** be already declared and syncd with Vibetrace using the `/items` API. This endpoint will return 400 otherwise.
     @param {String} [payload.referer] - OPTIONAL, url of the referer site, only relevant when the url is external. Vibetrace parses the referral page to extract further information about the user's interests.
     ````
 
