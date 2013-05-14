@@ -267,6 +267,13 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
     curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "itemId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewitem
     ````
+ - example of Javascript Code
+
+ ```javascript
+ var s = "JavaScript syntax highlighting";
+ alert(s);
+ ```
+ 
 
 ### View Category
 2. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/viewcategory`
