@@ -243,6 +243,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
 **NOTE** The app is responsable to make sure the information sent to Vibetrace is accurate. Sending inconsistent values will result in poor recommendations. If you encounter dificulties, please contact us at [alext@vibetrace.com](mailto:alext@vibetrace.com)
 
+### H3 Event: View Item
 
 1. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/viewitem`
 
