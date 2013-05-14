@@ -278,10 +278,10 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
  - PHP Code
  ```javascript
-<?php
+ <?php
    echo 's';
 
-?>
+ ?>
  ```
  
 
