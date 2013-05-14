@@ -58,7 +58,7 @@ Items
 
 Allows apps to upload/inspect/modify/remove items of interest.
 
-
+### Upload Item
 1. `POST https://app.vibetrace.com/api/v3/apps/:appId/items`
 
  - `Accept: application/json`
@@ -116,7 +116,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
     }
     ````
 
-
+### Retrieve Item
 2. `GET https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
 
  - `Accept: application/json`
@@ -159,7 +159,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
     }
     ````
 
-
+### Check Item
 3. `HEAD https://app.vibetrace.com/api/v2/apps/:appId/items/:itemId`
 
  - usefull for checking if a item identified by `:itemId` exists and belongs to an app identified by `:appId`.
@@ -171,7 +171,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
     curl --request HEAD --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
-
+### Update Item
 4. `PUT https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
 
  - `Accept: application/json`
@@ -216,7 +216,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
     }
     ````
 
-
+### Delete Item
 5. `DELETE https://app.vibetrace.com/api/v3/apps/:appId/items/:itemId`
 
  - usefull when an item is no longer in the app's collection and should be removed from Vibetrace's recommendation engine.
@@ -243,6 +243,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
 **NOTE** The app is responsable to make sure the information sent to Vibetrace is accurate. Sending inconsistent values will result in poor recommendations. If you encounter dificulties, please contact us at [alext@vibetrace.com](mailto:alext@vibetrace.com)
 
+### View Item
 
 1. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/viewitem`
 
@@ -261,13 +262,30 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
 
  - if successful, it returns `201 Created` status code with an empty http body.
- - below is an example of using `curl` for creating a new viewitem event:
 
+ #### Code examples
+
+ - below is an example of using `curl` for creating a new viewitem event:
     ````
     curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "itemId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewitem
     ````
 
+ - Javascript Code
+ ```javascript
+ var s = "JavaScript syntax highlighting";
+ alert(s);
+ ```
 
+ - PHP Code
+ ```javascript
+ <?php
+   echo 's';
+
+ ?>
+ ```
+ 
+
+### View Category
 2. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/viewcategory`
 
  - `Accept: application/json`
@@ -291,7 +309,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "categoryId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewcategory
     ````
 
-
+### Search
 3. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/search`
 
  - `Accept: application/json`
@@ -316,7 +334,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"query": "awesome product", "referer": "http://google.com/q=some+query", "sessionId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/search
     ````
 
-
+### Add to Cart
 4. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/addtocart`
 
  - `Accept: application/json`
@@ -342,7 +360,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "itemId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/addtocart
     ````
 
-
+### Checkout
 5. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/checkout`
 
  - `Accept: application/json`
