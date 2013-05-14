@@ -317,6 +317,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
  
  - Javascript Code
+
  ```javascript
  <script>
     window.vt.event('viewitem', {
@@ -327,6 +328,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  ```
 
  - PHP Code
+ 
  ```php
  <?php
    
