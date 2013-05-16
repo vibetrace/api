@@ -85,8 +85,7 @@ This process involves the Vibetrace Javascript SDK.
         window.VT.event('viewitem', {
             userId: 'unique-user-id',
             sessionId: 'unique-session-id',
-            itemId: 'unique-item-id',
-            referrer: 'optional-page-referer'
+            itemId: 'unique-item-id'
         });
     ````
 
@@ -103,6 +102,8 @@ Feel free to use any programming language you wish, but note that, currently, Vi
 4. Deliver recommendations
 --------------------------
 
-After gathering item information and user events, the Vibetrace engine will start to deliver recommendations.
+After gathering item information and user events, the Vibetrace engine is ready to deliver recommendations.
 
 The system is flexible enough to display personalized recommendation in real-time anywhere on the application user interface.
+
+For recommendations integration in your website and emails you have more details in the administration panel.
