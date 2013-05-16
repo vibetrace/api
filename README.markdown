@@ -322,13 +322,13 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  <script>
     window.vt.event('viewitem', {
         userId: 'unique-user-id',
-        category: 'unique-category-identifies'
+        category: 'unique-category-identifier'
     });
  </script>
  ```
 
  - PHP Code
- 
+
  ```php
  <?php
    
