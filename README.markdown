@@ -273,7 +273,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
  - using the Vibetrace Javascript Sdk:
 
-    ````js
+    ````html
     <script>
         window.vt.event('viewitem', {
             userId: 'unique-user-id',
@@ -312,7 +312,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
  - using the Vibetrace Javascript Sdk:
 
-    ````js
+    ````html
     <script>
         window.vt.event('viewcategory', {
             userId: 'unique-user-id',
@@ -351,7 +351,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
  - using the Vibetrace Javascript Sdk:
 
-    ````javascript
+    ````html
     <script>
         window.vt.event('search', {
             userId: 'unique-user-id',
@@ -391,7 +391,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
  - using the Vibetrace Javascript Sdk:
 
-    ````javascript
+    ````html
     <script>
         window.vt.event('addtocart', {
             userId: 'unique-user-id',
@@ -431,7 +431,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
  - using the Vibetrace Javascript Sdk:
 
-    ````javascript
+    ````html
     <script>
         window.vt.event('checkout', {
             userId: 'unique-user-id',
