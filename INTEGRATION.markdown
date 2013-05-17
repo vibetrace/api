@@ -12,7 +12,7 @@ Prior knowledge of software development, [HTTP protocol](http://en.wikipedia.org
 Support
 -------
 
-The [Vibetrace API](https://github.com/vibetrace/api/blob/master/README.markdown) and the Integration process described in this document are fully supported by the Vibetrace teamhttps://github.com/vibetrace/api/blob/master/README.markdown. Please let us know how the integration is progressing, what problems have you encountered and what additional features you may need in order to make your vibetrace experience smoother.
+The [Vibetrace API](https://github.com/vibetrace/api/blob/master/README.markdown) and the Integration process described in this document are fully supported by the Vibetrace team. Please let us know how the integration is progressing, what problems have you encountered and what additional features you may need in order to make your vibetrace experience smoother.
 
 For that and any other equiry or suggestion please email use at [admin@vibetrace.com](mailto:admin@vibetrace.com)
 
@@ -20,13 +20,13 @@ For that and any other equiry or suggestion please email use at [admin@vibetrace
 Integration
 -----------
 
-The following steps detail the integration with vibetrace service. Please referer to the [Vibetrace API document](https://github.com/vibetrace/api/blob/master/README.markdown) for a detailed description of how to use the API.
+The following steps detail the integration with the vibetrace service. Please referer to the [Vibetrace API document](https://github.com/vibetrace/api/blob/master/README.markdown) for a detailed description of how to use the API.
 
 
 1. Register your application
 ----------------------------
 
-Vibetrace provide two ways of registering an application: using a [registration form](https://app.vibetrace.com/register) or by using a the `/apps` [api endpoint](https://github.com/vibetrace/api#apps)
+Vibetrace provides an easy way to register you application, by using the `/apps` [REST api endpoint](https://github.com/vibetrace/api#apps)
 
 
 2. Synchronize your item catalog with vibetrace
