@@ -56,7 +56,8 @@ Every time the user performs an action of interest, the app is responsible for p
 a. by using the Vibetrace Javascript SDK and publishing events dirrectly from the web inteface
 
 This process involves the Vibetrace Javascript SDK.
-- Add the javascript SDK by adding the vibetrace integration file to the html of your application. The file's url has the following format:
+
+- Include the javascript SDK in your page by adding the vibetrace integration file to the html of your application. The file's url has the following format:
     `https://app.vibetrace.com/javascripts/loader/APP_ID.js`
 
 - NOTE The `APP_ID` parameter is the id of your application received upon registration.
@@ -78,25 +79,31 @@ This process involves the Vibetrace Javascript SDK.
 
 - If you need complete control over the way you load assets in your application, you can use the raw javascript file.
 
-
-- You can now use the SDK to define and send user events to the Vibetrace engine. Please review the [Events Section of the Vibetrace API](https://github.com/vibetrace/api#events) to see the types of events we support. Below is an example of how to publish a `viewitem` event:
+- Publish events whenever you deem necessary by simply adding the parameters in an object to the global `window._vteq` event buffer. Below is an example of how you would register a `viewitem` event. _Note_ that this code can be placed wherever you see fit and it's not dependent on whether the sdk has loaded or not.
 
     ````javascript
-        window.VT.event('viewitem', {
-            userId: 'unique-user-id',
-            sessionId: 'unique-session-id',
-            itemId: 'unique-item-id'
+    <script>
+        _vteq = _vteq || [];
+        _vteq.push({
+            'viewitem': {
+                userId: 'unique-user-id',
+                itemId: 'unique-item-id',
+                sessionId: 'unique-session-id'
+            }
         });
+    </script>
     ````
+
+- Please review the [Events Section of the Vibetrace API](https://github.com/vibetrace/api#events) to see the types of events we support and the parameters they require.
 
 - the Vibetrace engine will start to gather data and adjusts to the specifics of your application event flow. This may take anywhere from 3 days to a week, depending on the number of items in the catalog and generated events.
 
 
 b. by directly using the Vibetrace HTTP RESTful API.
 
-This flow is useful when the app wishes to publish events on the backend. All communication is performed through HTTPS and authorized with Basic HTTP Authentication. Please refer the the [Vibetrace API Documentation](https://github.com/vibetrace/api) for a detailed description of the api.
+This flow is useful when the app wishes to publish events directly from it's backend infrastructure. All communication is performed through HTTPS and authorized with Basic HTTP Authentication. Please refer the the [Vibetrace API Documentation](https://github.com/vibetrace/api) for a detailed description of the api.
 
-Feel free to use any programming language you wish, but note that, currently, Vibetrace does not provide an official implementation of it's rest api in any other language other than browser javascript. However, we would appreciate if you emailed us at [admin@vibetrace.com](mailto:admin@vibetrace.com) to let us know which plaform you are using to integrate with our API.
+Feel free to use any programming language you wish, but note that, currently, Vibetrace does not provide an official implementation of it's rest api in any other language other than browser javascript. However, we would appreciate if you emailed us at [admin@vibetrace.com](mailto:admin@vibetrace.com) to let us know which plaform you are using to integrate with our API and describe your experience.
 
 
 4. Deliver recommendations
