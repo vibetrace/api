@@ -266,28 +266,22 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  #### Code examples
 
  - below is an example of using `curl` for creating a new viewitem event:
+
     ````
     curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "itemId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewitem
     ````
 
- - Javascript Code
- ```javascript
- <script>
-    window.vt.event('viewitem', {
-        userId: 'unique-user-id',
-        sessionId: 'unique-session-id',
-        itemId: 'unique-item-id'
-    });
- </script>
- ```
+ - using the Vibetrace Javascript Sdk:
 
- - PHP Code
- ```php
- <?php
-   
- ?>
- ```
- 
+    ````html
+    <script>
+        window.VT.event('viewitem', {
+            userId: 'unique-user-id',
+            sessionId: 'unique-session-id',
+            itemId: 'unique-item-id'
+        });
+    </script>
+    ````
 
 ### View Category
 2. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/viewcategory`
@@ -315,25 +309,17 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
     curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "categoryId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewcategory
     ````
- 
- - Javascript Code
 
- ```javascript
- <script>
-    window.vt.event('viewitem', {
-        userId: 'unique-user-id',
-        category: 'unique-category-identifier'
-    });
- </script>
- ```
+ - using the Vibetrace Javascript Sdk:
 
- - PHP Code
-
- ```php
- <?php
-   
- ?>
- ```
+    ````html
+    <script>
+        window.VT.event('viewcategory', {
+            userId: 'unique-user-id',
+            category: 'unique-category-identifies'
+        });
+    </script>
+    ````
 
 ### Search
 3. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/search`
@@ -363,22 +349,16 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"query": "awesome product", "referer": "http://google.com/q=some+query", "sessionId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/search
     ````
 
- - Javascript Code
- ```javascript
- <script>
-    window.vt.event('viewitem', {
-        userId: 'unique-user-id',
-        query: 'search-query'
-    });
- </script>
- ```
+ - using the Vibetrace Javascript Sdk:
 
- - PHP Code
- ```php
- <?php
-   
- ?>
- ```
+    ````html
+    <script>
+        window.VT.event('search', {
+            userId: 'unique-user-id',
+            query: 'search-query'
+        });
+    </script>
+    ````
 
 ### Add to Cart
 4. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/addtocart`
@@ -400,10 +380,25 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     ````
 
  - if successful, it returns `201 Created` status code with an empty http body.
+
+ #### Code examples
+
  - below is an example of using `curl` for creating a new `add to cart` event:
 
     ````
     curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "itemId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/addtocart
+    ````
+
+ - using the Vibetrace Javascript Sdk:
+
+    ````html
+    <script>
+        window.VT.event('addtocart', {
+            userId: 'unique-user-id',
+            cartId: 'unique-cart-id'
+            itemId: 'unique-item-id'
+        });
+    </script>
     ````
 
 ### Checkout
@@ -427,33 +422,22 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - if successful, it returns `201 Created` status code with an empty http body.
  - below is an example of using `curl` for creating a new `add to cart` event:
 
-    ````
-    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/checkout
-    ````
+ #### Code examples
 
-### Order Confirmation
-6. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/orderconfirmation`
-
- - `Accept: application/json`
- - `Content-Type: application/json`
- - registers a cart checkout to vibetrace. These events are unique and immutable.
- - this event should be sent when the user completed the checkout process and is on the `Thank you` page.
- - the cart session that has just finnished is determined by the `cartId` payload variable.
- - the payload is a JSON object with the following signature:
-
-    ````
-    @param {Object} payload - the body of the http request should be a JSON object.
-    @param {String} [payload.userId] - OPTIONAL, unique identifier for the app's user. Only for registered users. This allows vibetrace to track users' preferences across multiple sessions.
-    @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
-    @param {String} [payload.cartId] - REQUIRED, unique identified of a shopping cart session.
-    @param {String} [payload.referer] - OPTIONAL, url of the referer site, only relevant when the url is external. Vibetrace parses the referral page to extract further information about the user's interests.
-    ````
-
- - if successful, it returns `201 Created` status code with an empty http body.
  - below is an example of using `curl` for creating a new `add to cart` event:
 
     ````
     curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/checkout
+    ````
+ - using the Vibetrace Javascript Sdk:
+
+    ````html
+    <script>
+        window.VT.event('checkout', {
+            userId: 'unique-user-id',
+            cartId: 'unique-cart-id'
+        });
+    </script>
     ````
 
 

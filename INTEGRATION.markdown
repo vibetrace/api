@@ -76,12 +76,13 @@ This process involves the Vibetrace Javascript SDK.
     </script>
     ````
 
-- If you need complete control over the way you load assets in your application, you might want to use the raw javascript file.
+- If you need complete control over the way you load assets in your application, you can use the raw javascript file.
+
 
 - You can now use the SDK to define and send user events to the Vibetrace engine. Please review the [Events Section of the Vibetrace API](https://github.com/vibetrace/api#events) to see the types of events we support. Below is an example of how to publish a `viewitem` event:
 
     ````javascript
-        window.vt.event('viewitem', {
+        window.VT.event('viewitem', {
             userId: 'unique-user-id',
             sessionId: 'unique-session-id',
             itemId: 'unique-item-id'
