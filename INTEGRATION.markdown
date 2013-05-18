@@ -81,7 +81,7 @@ This process involves the Vibetrace Javascript SDK.
 
 - Publish events whenever you deem necessary by simply adding the parameters in an object to the global `window._vteq` event buffer. Below is an example of how you would register a `viewitem` event. _Note_ that this code can be placed wherever you see fit and it's not dependent on whether the sdk has loaded or not.
 
-    ````javascript
+    ````html
     <script>
         _vteq = _vteq || [];
         _vteq.push({
