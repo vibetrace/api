@@ -275,10 +275,13 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        window.VT.event('viewitem', {
-            userId: 'unique-user-id',
-            sessionId: 'unique-session-id',
-            itemId: 'unique-item-id'
+        _vteq = _vteq || [];
+        _vteq.push({
+            'viewitem': {
+                userId: 'unique-user-id',
+                itemId: 'unique-item-id',
+                sessionId: 'unique-session-id'
+            }
         });
     </script>
     ````
@@ -314,9 +317,13 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        window.VT.event('viewcategory', {
-            userId: 'unique-user-id',
-            category: 'unique-category-identifies'
+        _vteq = _vteq || [];
+        _vteq.push({
+            'viewcategory': {
+                userId: 'unique-user-id',
+                category: 'unique-category-id',
+                sessionId: 'unique-session-id'
+            }
         });
     </script>
     ````
@@ -353,9 +360,13 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        window.VT.event('search', {
-            userId: 'unique-user-id',
-            query: 'search-query'
+        _vteq = _vteq || [];
+        _vteq.push({
+            'search': {
+                userId: 'unique-user-id',
+                query: 'search-query',
+                sessionId: 'unique-session-id'
+            }
         });
     </script>
     ````
@@ -393,10 +404,14 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        window.VT.event('addtocart', {
-            userId: 'unique-user-id',
-            cartId: 'unique-cart-id'
-            itemId: 'unique-item-id'
+        _vteq = _vteq || [];
+        _vteq.push({
+            'addtocart': {
+                userId: 'unique-user-id',
+                cartId: 'unique-cart-id',
+                itemId: 'unique-item-id',
+                sessionId: 'unique-session-id'
+            }
         });
     </script>
     ````
@@ -433,9 +448,49 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        window.VT.event('checkout', {
-            userId: 'unique-user-id',
-            cartId: 'unique-cart-id'
+        _vteq = _vteq || [];
+        _vteq.push({
+            'checkout': {
+                userId: 'unique-user-id',
+                cartId: 'unique-cart-id'
+                sessionId: 'unique-session-id'
+            }
+        });
+    </script>
+    ````
+
+### Custom Events
+6. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/:customevent`
+
+ - The vibetrace engine supports custom events, ie. events whose names and parameters you choose. This can be helpfull in many ways, one of it's utility is to plot significant events on the reporting facility.
+ - `Accept: application/json`
+ - `Content-Type: application/json`
+ - Sends events with a custom name, specified with the :customevent placeholder, to Vibetrace.
+ - the payload is a JSON object with the signature of you choice. All json types of data are supported. Please refer to the [JSON documentation](http://www.json.org/) for more information.
+
+ _NOTE_ In order for custom events to be accepted, they must be previously defined using the vibetrace admin. Please log in at [dashboard.vibetrace.com](https://dashboard.vibetrace.com) to setup your custom events.
+
+ - if successful, it returns `201 Created` status code with an empty http body.
+
+ #### Code examples
+
+ - below is an example of using `curl` for publishing a custom `shopping cart step` event:
+
+    ````
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "step": "2", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/shoppingcartstep
+    ````
+ - using the Vibetrace Javascript Sdk:
+
+    ````html
+    <script>
+        _vteq = _vteq || [];
+        _vteq.push({
+            'shoppingcartstep': {
+                userId: 'unique-user-id',
+                cartId: 'unique-cart-id',
+                sessionId: 'unique-session-id',
+                step: 2
+            }
         });
     </script>
     ````
