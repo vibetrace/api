@@ -98,7 +98,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` for creating a new item:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"id":"1","name":"product1", "category": "category1", "url": "http://domain.com/products/1", "image": "http://domain.com/products/1.png", "description": "product1 in category1", "price": 100, "location": "Romania"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"id":"1","name":"product1", "category": "category1", "url": "http://domain.com/products/1", "image": "http://domain.com/products/1.png", "description": "product1 in category1", "price": 100, "location": "Romania"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items
     ````
 
  - the response for the above request is:
@@ -141,7 +141,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` to inspect an existing item by it's id:
 
     ````bash
-    curl --request GET --header "Accept: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
+    curl --request GET --header "Accept: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM="  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
  - the response for the above request is:
@@ -168,7 +168,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` to issue a HEAD request.
 
     ````bash
-    curl --request HEAD --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
+    curl --request HEAD  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
 ### Update Item
@@ -198,7 +198,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` for updating an existing item:
 
     ````bash
-    curl --request PUT --header "Content-Type: application/json" --header "Accept: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"category": "category2"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
+    curl --request PUT --header "Content-Type: application/json" --header "Accept: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"category": "category2"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
  - the response will be
@@ -226,7 +226,7 @@ Allows apps to upload/inspect/modify/remove items of interest.
  - below is an example of using `curl` to delete an existing item:
 
     ````bash
-    curl --request DELETE  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
+    curl --request DELETE  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM="  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/items/1
     ````
 
  - the response payload will be empty
@@ -268,7 +268,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for creating a new viewitem event:
 
     ````
-    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "itemId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewitem
+    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "itemId": "1", "userId": "1"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewitem
     ````
 
  - using the Vibetrace Javascript Sdk:
@@ -310,7 +310,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for creating a new viewitem event:
 
     ````
-    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "categoryId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewcategory
+    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"referer": "http://google.com/q=some+query", "sessionId": "1", "categoryId": "1", "userId": "1"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/viewcategory
     ````
 
  - using the Vibetrace Javascript Sdk:
@@ -353,7 +353,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for creating a new `search` event:
 
     ````
-    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"query": "awesome product", "referer": "http://google.com/q=some+query", "sessionId": "1", "userId": "1"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/search
+    curl --request POST --header "Content-Type: application/json"  --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"query": "awesome product", "referer": "http://google.com/q=some+query", "sessionId": "1", "userId": "1"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/search
     ````
 
  - using the Vibetrace Javascript Sdk:
@@ -397,7 +397,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for creating a new `add to cart` event:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "itemId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/addtocart
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "itemId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/addtocart
     ````
 
  - using the Vibetrace Javascript Sdk:
@@ -442,7 +442,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for creating a new `add to cart` event:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/checkout
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/checkout
     ````
  - using the Vibetrace Javascript Sdk:
 
@@ -477,7 +477,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - below is an example of using `curl` for publishing a custom `shopping cart step` event:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "step": "2", "referer": "http://some-campaign.com"}' --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/shoppingcartstep
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "step": "2", "referer": "http://some-campaign.com"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/shoppingcartstep
     ````
  - using the Vibetrace Javascript Sdk:
 
@@ -538,7 +538,7 @@ Vibetrace allows apps to register in a programatic way using the endpoint descri
  - exemple of using curl to register a new application:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --data-binary '{"email": "me@domain.com", "url": "http://domain.com", "feed": "http://domain.com/feed.json", "version": "v3"}' --insecure https://app.vibetrace.com/api/v3/apps
+    curl --request POST --header "Content-Type: application/json" --data-binary '{"email": "me@domain.com", "url": "http://domain.com", "feed": "http://domain.com/feed.json", "version": "v3"}'  https://app.vibetrace.com/api/v3/apps
     ````
 
  - the response to the above request is:
@@ -580,7 +580,7 @@ Vibetrace allows apps to register in a programatic way using the endpoint descri
  - exemple of using curl to fetch information about a registered application:
 
     ````
-    curl --request GET --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --insecure https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c
+    curl --request GET --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM="  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c
     ````
 
  - the response for the above request is:
