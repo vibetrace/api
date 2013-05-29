@@ -71,7 +71,7 @@ This process involves the Vibetrace Javascript SDK.
             l.type='text/javascript';
             l.async=true;
             l.src='https://app.vibetrace.com/loaders/APP_ID.js';
-            var s=document.getElementsById('vt-script-loader');
+            var s=document.getElementById('vt-script-loader');
             s.parentNode.insertBefore(l, s);
         })();
     </script>
