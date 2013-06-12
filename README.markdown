@@ -600,6 +600,50 @@ Vibetrace allows apps to register in a programatic way using the endpoint descri
     ````
 
 
+Users
+-----
+
+`https://app.vibetrace.com/api/v3/apps/:appId/users`
+
+Vibetrace allows apps to upload user information in a programatic way using the endpoint described in this section.
+
+**NOTE** Currently the only supported api allows the apps to modify a previously defined user.
+This can happend when publishing an event and attaching a `userId` to it.
+Vibetrace creates a user record for that `userId` and exposes a `PUT` endpoint so you can update the record with additional information.
+
+
+### Update User
+4. `PUT https://app.vibetrace.com/api/v3/apps/:appId/users/:userId`
+
+ - `Accept: application/json`
+ - `Content-Type: application/json`
+ - usefull to updating the properties of an existing user.
+ - for `:userId` use the `id` specified when a previous `/events` call was made. Note that it's the app's responsability to make sure these id's are accurate. This API will only check for it's uniqueness.
+ - _NOTE_ you cannot update the `id` of an user, the `id` property will be ignored. _!You cannot change the id of an user._
+ - if successful, the response will be `200 Ok` and the user resource will updated and returned as a json.
+ - Here's the supported payload signature:
+
+    ````
+    @param {Object} user - the body of the request
+    @param {String} [item.email] - you can only update the email of a user record.
+    ````
+
+ - _NOTE_ all properties that are not specified in the signature above will be ignored.
+ - below is an example of using `curl` for updating an existing item:
+
+    ````bash
+    curl --request PUT --header "Content-Type: application/json" --header "Accept: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"email": "loyal@user.com"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/users/1
+    ````
+
+ - the response will be
+
+    ````json
+    {
+       "id":"1",
+       "email": "loyal@user.com"
+    }
+    ````
+
 Support
 -------
 For any questions, feedback, issues or feature requests please use the issue tracker on this repo or email us at [alext@vibetrace.com](mailto:alext@vibetrace.com).
