@@ -422,7 +422,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
  - `Accept: application/json`
  - `Content-Type: application/json`
  - registers a cart checkout to vibetrace. These events are unique and immutable.
- - this event should be sent when the user completed the checkout process and is on the `Thank you` page.
+ - this event should be sent when the user goes through each step of the checkout process. When the order is confirmed, ie. when the user is on the `Thank you` page, you should also set the payload flag `confirmation=true`.
  - the cart session that has just finnished is determined by the `cartId` payload variable.
  - the payload is a JSON object with the following signature:
 
@@ -431,6 +431,8 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     @param {String} [payload.userId] - OPTIONAL, unique identifier for the app's user. Only for registered users. This allows vibetrace to track users' preferences across multiple sessions.
     @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
     @param {String} [payload.cartId] - REQUIRED, unique identified of a shopping cart session.
+    @param {Boolean} [payload.confirmation] - OPTIONAL, boolean indicating whether the cart entered `Thank you!` page or not. Set it to `true` to confirm the order and stop processing the current cart.
+    @param {String} [payload.step] - OPTIONAL, notify vibetrace of the current cart processing step.
     @param {String} [payload.referer] - OPTIONAL, url of the referer site, only relevant when the url is external. Vibetrace parses the referral page to extract further information about the user's interests.
     ````
 
@@ -439,10 +441,10 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
  #### Code examples
 
- - below is an example of using `curl` for creating a new `add to cart` event:
+ - below is an example of using `curl` for creating a new `checkout` event:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "referer": "http://some-campaign.com"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/checkout
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "confirmation": true, "referer": "http://some-campaign.com"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/checkout
     ````
  - using the Vibetrace Javascript Sdk:
 
@@ -452,8 +454,9 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
         _vteq.push({
             'checkout': {
                 userId: 'unique-user-id',
-                cartId: 'unique-cart-id'
                 sessionId: 'unique-session-id'
+                cartId: 'unique-cart-id'
+                confirmation: true
             }
         });
     </script>
@@ -462,14 +465,13 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 ### Custom Events
 6. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/:customevent`
 
+ _NOTE_ In order for custom events to be accepted, they must be previously defined using the vibetrace admin. Please log in at [dashboard.vibetrace.com](https://dashboard.vibetrace.com) to setup your custom events.
+
  - The vibetrace engine supports custom events, ie. events whose names and parameters you choose. This can be helpfull in many ways, one of it's utility is to plot significant events on the reporting facility.
  - `Accept: application/json`
  - `Content-Type: application/json`
  - Sends events with a custom name, specified with the :customevent placeholder, to Vibetrace.
  - the payload is a JSON object with the signature of you choice. All json types of data are supported. Please refer to the [JSON documentation](http://www.json.org/) for more information.
-
- _NOTE_ In order for custom events to be accepted, they must be previously defined using the vibetrace admin. Please log in at [dashboard.vibetrace.com](https://dashboard.vibetrace.com) to setup your custom events.
-
  - if successful, it returns `201 Created` status code with an empty http body.
 
  #### Code examples
