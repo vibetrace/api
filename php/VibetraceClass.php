@@ -8,40 +8,42 @@ Feel free to modify this code to match your environment
 
 class EventTracker {
     public $token;
-    public $host = 'https://api.vibetrace.com/';
-    public function __construct($client_token) {
-        $this->token = $client_token;
+    public $baseHost = 'https://app.vibetrace.com/api/v3/apps/';
+    public function __construct($clientToken, $apiKey, $apiToken) {
+        $this->token = $clientToken;
+        $this->apiKey = $apiKey;
+        $this->apiToken = $apiToken;
+        $this->host = $this->baseHost . $this->token . '/events/';
     }
     function track($event, $data=array()) {
-        $params = array(
-            'event' => $event,
-            'data' => $data
-            );
+        $auth = base64_encode($this->apiKey . ':' . $this->apiToken);
+        $headers = array(
+            'Authorization: Basic '.$auth,
+            'Accept: application/json',
+            'Content-Type: application/json'
+        );
 
-        if (!isset($params['data']['token'])){
-            $params['data']['token'] = $this->token;
-        }
-        $url = $this->host . 'track/?data=' . base64_encode(json_encode($params));
-        //You should run this as a background process
-        //Please see PHP Expect at http://php.net/manual/en/book.expect.php
-        exec("curl '" . $url . "' >/dev/null 2>&1 &"); 
+        //create the url for the event
+        $url = $this->host . $event;
+        $fieldsString = json_encode($data);
+
+        //curl
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch,CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch,CURLOPT_POST, count($data));
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fieldsString);
+
+        //execute post
+        $result = curl_exec($ch);
+
+        //close connection
+        curl_close($ch);
     }
 }
-
-// Include and instantiate Vibetrace class
-$vibetrace = new EventTracker("YOUR_TOKEN");
-
-//track Purchase
-$vibetrace->track('purchase', 
-                    array('item'=>'candy', 'type'=>'snack'));
-
-
-//track ViewItem
-
-
-//track ViewCategory
-
-
-//track Search
 
 ?>
