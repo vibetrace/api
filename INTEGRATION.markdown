@@ -68,11 +68,10 @@ This process involves the Vibetrace Javascript SDK.
     <script id='vt-script-loader'>
         (function(){
             var l=document.createElement('script');
-            l.type='text/javascript';
-            l.async=true;
             l.src='https://app.vibetrace.com/loaders/APP_ID.js';
             var s=document.getElementById('vt-script-loader');
             s.parentNode.insertBefore(l, s);
+            window._vteq = [];
         })();
     </script>
     ````
@@ -83,8 +82,7 @@ This process involves the Vibetrace Javascript SDK.
 
     ````html
     <script>
-        _vteq = _vteq || [];
-        _vteq.push({
+        window._vteq.push({
             'viewitem': {
                 userId: 'unique-user-id',
                 itemId: 'unique-item-id',

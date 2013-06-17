@@ -275,8 +275,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        _vteq = _vteq || [];
-        _vteq.push({
+        window._vteq.push({
             'viewitem': {
                 userId: 'unique-user-id',
                 itemId: 'unique-item-id',
@@ -317,8 +316,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        _vteq = _vteq || [];
-        _vteq.push({
+        window._vteq.push({
             'viewcategory': {
                 userId: 'unique-user-id',
                 category: 'unique-category-id',
@@ -360,8 +358,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        _vteq = _vteq || [];
-        _vteq.push({
+        window._vteq.push({
             'search': {
                 userId: 'unique-user-id',
                 query: 'search-query',
@@ -404,8 +401,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        _vteq = _vteq || [];
-        _vteq.push({
+        window._vteq.push({
             'addtocart': {
                 userId: 'unique-user-id',
                 cartId: 'unique-cart-id',
@@ -450,8 +446,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
-        _vteq = _vteq || [];
-        _vteq.push({
+        window._vteq.push({
             'checkout': {
                 userId: 'unique-user-id',
                 sessionId: 'unique-session-id'
@@ -476,22 +471,19 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
  #### Code examples
 
- - below is an example of using `curl` for publishing a custom `shopping cart step` event:
+ - below is an example of using `curl` for publishing a custom `add to wishlist` event:
 
     ````
-    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "step": "2", "referer": "http://some-campaign.com"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/shoppingcartstep
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"sessionId": "1", "userId": "1", "cartId": "1", "step": "2", "referer": "http://some-campaign.com"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/addtowishlist
     ````
  - using the Vibetrace Javascript Sdk:
 
     ````html
     <script>
-        _vteq = _vteq || [];
-        _vteq.push({
-            'shoppingcartstep': {
+        window._vteq.push({
+            'addtowishlist': {
                 userId: 'unique-user-id',
-                cartId: 'unique-cart-id',
-                sessionId: 'unique-session-id',
-                step: 2
+                prodId: 'unique-cart-id'
             }
         });
     </script>
