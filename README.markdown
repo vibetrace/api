@@ -428,6 +428,7 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     @param {String} [payload.sessionId] - REQUIRED, unique identifier for the user's session.
     @param {String} [payload.cartId] - REQUIRED, unique identified of a shopping cart session.
     @param {Boolean} [payload.confirmation] - OPTIONAL, boolean indicating whether the cart entered `Thank you!` page or not. Set it to `true` to confirm the order and stop processing the current cart.
+    @param {Boolean} [payload.items] - REQUIRED when [payload.confirmation is set to true], array of items bought.
     @param {String} [payload.step] - OPTIONAL, notify vibetrace of the current cart processing step.
     @param {String} [payload.referer] - OPTIONAL, url of the referer site, only relevant when the url is external. Vibetrace parses the referral page to extract further information about the user's interests.
     ````
@@ -446,11 +447,13 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
 
     ````html
     <script>
+        var items = [ { id:'unique-product-id' , quantity:item-quantity}, {...}, {...} ];
         window._vteq.push({
             'checkout': {
                 userId: 'unique-user-id',
-                sessionId: 'unique-session-id'
-                cartId: 'unique-cart-id'
+                sessionId: 'unique-session-id',
+                cartId: 'unique-cart-id',
+                items: items,
                 confirmation: true
             }
         });
