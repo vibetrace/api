@@ -460,8 +460,47 @@ App can only _write_ events to Vibetrace, thus only POST endpoints are exposed.
     </script>
     ````
 
+### Login
+6. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/login`
+
+ - `Accept: application/json`
+ - `Content-Type: application/json`
+ - registers a new login event for an user email in the system
+ - this event should be sent when an user inputs an email address anywhere in the website
+ 
+
+    ````
+    @param {Object} payload - the body of the http request should be a JSON object.
+    @param {String} [payload.email] - REQUIRED
+    @param {String} [payload.attribute] - OPTIONAL, any format that is available for your account. Please check avaiable atributes. 
+    ````
+
+ - if successful, it returns `201 Created` status code with an empty http body.
+ - below is an example of using `curl` for creating a new `login` event:
+
+ #### Code examples
+
+ - below is an example of using `curl` for creating a new `login` event:
+
+    ````
+    curl --request POST --header "Content-Type: application/json" --user "Cf4S4qrr/OSKzKMl3Tm/NTMECRM=:U1tfKBtyJstc+LqOUem99YkI1hM=" --data-binary '{"email": "john.smith@example.com", "name": "John Smith"}'  https://app.vibetrace.com/api/v3/apps/50fc3bb47cfd33723b00000c/events/login
+    ````
+ - using the Vibetrace Javascript Sdk:
+
+    ````html
+    <script>
+        var items = [ { id:'unique-product-id' , quantity:item-quantity}, {...}, {...} ];
+        window._vteq.push({
+            'login': {
+                "email": "john.smith@example.com",
+                "name": "John Smith"
+            }
+        });
+    </script>
+    ````
+
 ### Custom Events
-6. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/:customevent`
+7. `POST https://app.vibetrace.com/api/v3/apps/:appId/events/:customevent`
 
  _NOTE_ In order for custom events to be accepted, they must be previously defined using the vibetrace admin. Please log in at [dashboard.vibetrace.com](https://dashboard.vibetrace.com) to setup your custom events.
 
