@@ -1,3 +1,6 @@
+This repository has changed, left here for old clients only who are still using it.
+Please refer to our new version of the API
+
 Vibetrace API
 =============
 
